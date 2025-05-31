@@ -83,16 +83,19 @@ export default function HomeHero() {
         {/* Subtle grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
-        {/* Blend with image */}
-        <Image
-          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1920&q=80"
-          alt="Saurav Computers Classroom"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-10 mix-blend-overlay"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/50 to-background/90" />
+        {/* Background image with overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1920&q=80"
+            alt="Saurav Computers Classroom"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/90" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/30 to-background/90" />
+        </div>
       </div>
 
       {/* Hero content */}
@@ -151,7 +154,7 @@ export default function HomeHero() {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div variants={childVariants} className="flex flex-wrap gap-4 mt-2">
+            <motion.div variants={childVariants} className="flex flex-wrap gap-4 mt-2 rohan">
               <Link
                 href="/courses"
                 className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden font-bold rounded-full group bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all duration-300 ease-out"
@@ -197,30 +200,60 @@ export default function HomeHero() {
                   ease: "easeInOut" 
                 }}
               >
-                <div className="relative aspect-video rounded-xl overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1581092335397-9fa22ed45177?auto=format&fit=crop&w=800&q=80"
-                    alt="Computer Training"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 500px"
-                    className="object-cover transition duration-700 ease-in-out hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"></div>
+                <div className="relative aspect-video rounded-xl overflow-hidden bg-background shadow-lg border border-border/20 hover:shadow-xl transition-shadow duration-300">
+                  <div className="absolute inset-0">
+                    <div className="absolute inset-0">
+                      <Image
+                        src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
+                        alt="Students learning computers"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 500px"
+                        className="object-cover transition duration-700 ease-in-out hover:scale-105 opacity-20"
+                        priority
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/80 to-background/90"></div>
+                  </div>
                   
                   {/* Overlaid content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-xl font-bold mb-2">{t("Start Your Tech Journey", "आपली तंत्रज्ञान यात्रा सुरू करा")}</h3>
-                    <p className="text-sm text-foreground/70 mb-4">{t("Join our flagship computer courses", "आमच्या फ्लॅगशिप कंप्यूटर कोर्समध्ये सामील व्हा")}</p>
+                  <div className="relative z-10 h-full flex flex-col justify-end p-6">
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+                        {t("Computer Training", "संगणक प्रशिक्षण")}
+                      </h3>
+                      <h4 className="text-lg font-semibold mb-2 text-foreground/90">
+                        {t("Start Your Tech Journey", "आपली तंत्रज्ञान यात्रा सुरू करा")}
+                      </h4>
+                      <p className="text-sm text-foreground/80">
+                        {t("Join our flagship computer courses", "आमच्या फ्लॅगशिप कंप्युटर कोर्समध्ये सामील व्हा")}
+                      </p>
+                    </div>
                     
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between items-center mt-4 pt-4 border-t border-border/20">
                       <div className="flex -space-x-2">
-                        {[1, 2, 3].map(i => (
-                          <div key={i} className="w-8 h-8 rounded-full bg-primary/20 border-2 border-background flex items-center justify-center text-xs font-bold">
-                            {i}
+                        {[
+                          { src: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80', name: 'Student 1' },
+                          { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80', name: 'Student 2' },
+                          { src: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&auto=format&fit=crop&q=80', name: 'Student 3' }
+                        ].map((student, i) => (
+                          <div key={i} className="w-8 h-8 rounded-full overflow-hidden border-2 border-background relative group">
+                            <Image
+                              src={student.src}
+                              alt={student.name}
+                              width={32}
+                              height={32}
+                              className="w-full h-full object-cover"
+                            />
+                            <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-background text-foreground rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                              {student.name}
+                            </span>
                           </div>
                         ))}
+                        <div className="w-8 h-8 rounded-full bg-foreground/5 border-2 border-background flex items-center justify-center text-xs font-medium text-foreground/70">
+                          +{Math.floor(Math.random() * 20) + 5}
+                        </div>
                       </div>
-                      <span className="text-xs font-semibold bg-accent/10 text-accent py-1 px-2 rounded-full">
+                      <span className="text-xs font-semibold bg-primary/10 text-primary dark:text-primary-dark py-1.5 px-3 rounded-full">
                         {t("Popular", "लोकप्रिय")}
                       </span>
                     </div>
@@ -232,34 +265,36 @@ export default function HomeHero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center"
-        animate={{ 
-          y: [0, 10, 0],
-          opacity: [0.5, 1, 0.5] 
-        }}
-        transition={{ 
-          repeat: Infinity,
-          duration: 2,
-          ease: "easeInOut" 
-        }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-primary/30 dark:border-primary-dark/30 flex justify-center pt-2">
-          <motion.div 
-            className="w-1.5 h-1.5 bg-primary dark:bg-primary-dark rounded-full"
-            animate={{ 
-              y: [0, 12, 0] 
-            }}
-            transition={{ 
-              repeat: Infinity,
-              duration: 2,
-              ease: "easeInOut" 
-            }}
-          />
-        </div>
-        <span className="text-xs mt-2 text-foreground/60">{t("Scroll", "स्क्रोल")}</span>
-      </motion.div>
+      {/* Scroll indicator - centered with more spacing */}
+      <div className="absolute bottom-8 left-0 right-0 z-10 flex justify-center mt-20 sm:mt-24">
+        <motion.div 
+          className="flex flex-col items-center"
+          animate={{ 
+            y: [0, 10, 0],
+            opacity: [0.5, 1, 0.5] 
+          }}
+          transition={{ 
+            repeat: Infinity,
+            duration: 2,
+            ease: "easeInOut" 
+          }}
+        >
+          <div className="w-6 h-10 rounded-full border-2 border-primary/30 dark:border-primary-dark/30 flex justify-center pt-2">
+            <motion.div 
+              className="w-1.5 h-1.5 bg-primary dark:bg-primary-dark rounded-full"
+              animate={{ 
+                y: [0, 12, 0] 
+              }}
+              transition={{ 
+                repeat: Infinity,
+                duration: 2,
+                ease: "easeInOut" 
+              }}
+            />
+          </div>
+          <span className="text-xs mt-2 text-foreground/60">{t("Scroll to explore", "शोधण्यासाठी स्क्रोल करा")}</span>
+        </motion.div>
+      </div>
     </section>
   );
 }
